@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -16,9 +18,12 @@ public class Robot extends TimedRobot {
 
   private CommandXboxController xb;
 
+  private TalonSRX intake;
+
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
+    this.intake = new TalonSRX(3);
   }
 
   @Override
@@ -58,7 +63,9 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    this.intake.set(TalonSRXControlMode.PercentOutput, 0.5);
+  }
 
   @Override
   public void teleopExit() {}
