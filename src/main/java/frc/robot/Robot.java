@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.Intake;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -18,12 +19,18 @@ public class Robot extends TimedRobot {
 
   private CommandXboxController xb;
 
-  private TalonSRX intake;
+  private Intake intake;
 
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
-    this.intake = new TalonSRX(3);
+    this.xb = new CommandXboxController(0);
+    this.intake = Intake.getInstance();
+
+    this.xb.a().onTrue(intake.setIntake());
+    this.xb.a().onFalse(intake.stopIntake());
+    this.xb.b().onTrue(intake.setOuttake());
+    this.xb.b().onFalse(intake.stopIntake());
   }
 
   @Override
@@ -63,9 +70,7 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void teleopPeriodic() {
-    this.intake.set(TalonSRXControlMode.PercentOutput, 0.5);
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void teleopExit() {}
