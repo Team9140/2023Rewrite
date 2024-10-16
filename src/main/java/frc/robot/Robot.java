@@ -7,7 +7,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.Drivetrain;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
@@ -16,9 +18,17 @@ public class Robot extends TimedRobot {
 
   private CommandXboxController xb;
 
+  private Drivetrain drive;
+
+
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
+    xb = new CommandXboxController(0);
+    drive = new Drivetrain();
+    drive.setDefaultCommand(
+      drive.doTheDriveThingy(xb::getLeftY,xb::getRightX, xb.getHID()::getLeftBumper)
+    );
   }
 
   @Override
