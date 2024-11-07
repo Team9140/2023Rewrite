@@ -7,30 +7,35 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.Intake;
 
+
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
-
-  private RobotContainer m_robotContainer;
-
+  private Arm arm;
+  private Drivetrain drive;
   private CommandXboxController xb;
-
   private Intake intake;
 
   @Override
   public void robotInit() {
-    m_robotContainer = new RobotContainer();
     this.xb = new CommandXboxController(0);
     this.intake = Intake.getInstance();
+    arm = Arm.getInstance();
 
     this.xb.a().onTrue(intake.setIntake());
     this.xb.a().onFalse(intake.stopIntake());
-    this.xb.b().onTrue(intake.setOuttake());
-    this.xb.b().onFalse(intake.stopIntake());
+    this.xb.x().onTrue(intake.setOuttake());
+    this.xb.x().onFalse(intake.stopIntake());
+    this.xb.b().onTrue(arm.setArmPosition(Math.PI));
+
+    drive = new Drivetrain();
+    drive.setDefaultCommand(
+            drive.doTheDriveThingy(xb::getLeftY, xb::getRightX, xb.getHID()::getLeftBumper)
+    );
   }
 
   @Override
@@ -49,11 +54,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
   }
 
   @Override
@@ -64,9 +65,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+
   }
 
   @Override
