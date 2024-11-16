@@ -14,4 +14,8 @@ public class Constants {
 
 
     }
+
+    public static class Drivetrain {
+        public static final double DEADBAND = 0.15;
+    }
 }

@@ -26,15 +26,21 @@ public class Robot extends TimedRobot {
     this.intake = Intake.getInstance();
     arm = Arm.getInstance();
 
-    this.xb.a().onTrue(intake.setIntake());
-    this.xb.a().onFalse(intake.stopIntake());
-    this.xb.x().onTrue(intake.setOuttake());
-    this.xb.x().onFalse(intake.stopIntake());
-    this.xb.b().onTrue(arm.setArmPosition(Math.PI));
+
+    this.xb.x().onTrue(arm.setArmPosition(0.0));
+    this.xb.y().onTrue(arm.setArmPosition(4.0*Math.PI / 5.0));
+    this.xb.b().onTrue(arm.setArmPosition((7.0*Math.PI) / 6.0));
+    this.xb.a().onTrue(arm.setArmPosition(4.90));
+
+    this.xb.rightTrigger().onTrue(intake.setIntake());
+    this.xb.rightTrigger().onFalse(intake.stopIntake());
+    this.xb.rightBumper().onTrue(intake.setOuttake());
+    this.xb.rightBumper().onFalse(intake.stopIntake());
+
 
     drive = new Drivetrain();
     drive.setDefaultCommand(
-            drive.doTheDriveThingy(xb::getLeftY, xb::getRightX, xb.getHID()::getLeftBumper)
+            drive.doTheDriveThingy(xb::getLeftY, xb::getLeftX, xb.getHID()::getLeftBumper)
     );
   }
 
