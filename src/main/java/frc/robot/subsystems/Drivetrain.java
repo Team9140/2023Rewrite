@@ -23,7 +23,6 @@ public class Drivetrain extends SubsystemBase {
         return this.run(() -> {
             double forward = MathUtil.applyDeadband(stickForward.get(), Constants.Drivetrain.DEADBAND) / 7.5;
             double angle = MathUtil.applyDeadband(stickAngle.get(), Constants.Drivetrain.DEADBAND);
-            angle = angle * angle * ((angle < 0) ? -1 : 1);
             boolean allowTurnInPlace = pressInPlace.get();
             m_RobotDrive.curvatureDrive(forward, angle, allowTurnInPlace);
         });
