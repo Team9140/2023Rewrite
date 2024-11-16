@@ -21,7 +21,7 @@ public class Drivetrain extends SubsystemBase {
 
     public Command doTheDriveThingy(Supplier<Double> stickForward, Supplier<Double> stickAngle, Supplier<Boolean>pressInPlace ) {
         return this.run(() -> {
-            double forward = MathUtil.applyDeadband(stickForward.get(), Constants.Drivetrain.DEADBAND) / 7.5;
+            double forward = MathUtil.applyDeadband(stickForward.get(), Constants.Drivetrain.DEADBAND) / 10;
             double angle = MathUtil.applyDeadband(stickAngle.get(), Constants.Drivetrain.DEADBAND);
             boolean allowTurnInPlace = pressInPlace.get();
             m_RobotDrive.curvatureDrive(forward, angle, allowTurnInPlace);
