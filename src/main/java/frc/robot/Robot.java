@@ -40,7 +40,7 @@ public class Robot extends TimedRobot {
 
     drive = new Drivetrain();
     drive.setDefaultCommand(
-            drive.doTheDriveThingy(xb::getLeftY, xb::getLeftX, xb.getHID()::getLeftBumper)
+            drive.doTheDriveThingy(xb::getLeftY, xb::getRightX, xb.getHID()::getLeftBumper)
     );
   }
 

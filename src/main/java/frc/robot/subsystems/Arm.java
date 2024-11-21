@@ -52,6 +52,7 @@ public class Arm extends SubsystemBase {
         SmartDashboard.putNumber("Arm Final Target (radians)", this.finalState.position);
         SmartDashboard.putNumber("Arm Current State (radians)", this.currentState.position);
         SmartDashboard.putNumber("Arm Current State Voltage", this.currentState.velocity);
+        //SmartDashboard.putNumber("Arm current pos", this.);
 
 
     }
